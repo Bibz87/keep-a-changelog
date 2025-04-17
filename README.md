@@ -149,7 +149,7 @@ It reads the CHANGELOG.md file and override it with the new format:
 Deno:
 
 ```sh
-deno install --allow-read --allow-write -fr --name changelog https://deno.land/x/changelog/bin.ts
+deno install --global --allow-read --allow-write -fr --name changelog https://deno.land/x/changelog/bin.ts
 ```
 
 Node:
@@ -188,26 +188,24 @@ If your "Unreleased" section has no version, you can specify it as an argument:
 changelog --release 2.0.0
 ```
 
-And return the latest released version:
+Print the latest released version:
 
 ```sh
 changelog --latest-release
 > 2.0.0
 ```
 
-Available options:
+Print the latest release:
 
-| Option             | Description                                                                                                                                                                                                    |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--format`         | The output format for the generated markdown. It can be `markdownlint` or `compact`. The default value is `compact`.                                                                                           |
-| `--bullet-style`   | The Markdown bullet style to use. It can be `-`, `*+*`, `+`. The default value is `-`.                                                                                                                         |
-| `--file`           | The markdown file of the changelog. The default value is `CHANGELOG.md`.                                                                                                                                       |
-| `--url`            | The base url used to build the diff urls of the different releases. It is taken from the existing diff urls in the markdown. If no urls are found, try to catch it using the url of the git remote repository. |
-| `--https`          | Set to false to use `http` instead `https` in the url (`--https=false`).                                                                                                                                       |
-| `--init`           | Init a new empty changelog file.                                                                                                                                                                               |
-| `--latest-release` | Print the latest release version.                                                                                                                                                                              |
-| `--release`        | Updated the latest unreleased version with the current date. Use `--release=X.Y.Z` to set a number if the version doesn't have it.                                                                             |
-| `--combine`        | Combine changes from releases with the same version.                                                                                                                                                           |
-| `--create`         | Create a new Unreleased version. Use `--create=X.Y.Z` to specify a version number or just `--create` for a version without number.                                                                             |
-| `--quiet`          | Do not output error messages                                                                                                                                                                                   |
-| `--head`           | Customize the `head` reference                                                                                                                                                                                 |
+```text
+changelog --latest-release-full
+## 2.6.1 - 2025-02-24
+### Fixed
+- NPM publishing [#55], [#56].
+```
+
+See available options:
+
+```sh
+changelog --help
+```

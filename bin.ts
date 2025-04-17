@@ -1,8 +1,6 @@
-#!/usr/bin/env deno
-
-import { join } from "jsr:@std/path@0.224.0";
+import { join } from "jsr:@std/path@1.0.8";
 import { Changelog, parser, Release } from "./mod.ts";
-import { parseArgs } from "jsr:@std/cli@1.0.0/parse-args";
+import { parseArgs } from "jsr:@std/cli@1.0.13/parse-args";
 import { parse as parseIni } from "jsr:@std/ini@0.225.2";
 import getSettingsForURL from "./src/settings.ts";
 
@@ -20,7 +18,17 @@ const argv = parseArgs(Deno.args, {
     "bullet-style": "-",
   },
   string: ["file", "format", "url", "head", "bullet-style"],
-  boolean: ["https", "init", "latest-release", "quiet", "help", "combine"],
+  boolean: [
+    "https",
+    "init",
+    "latest-release",
+    "latest-release-full",
+    "quiet",
+    "help",
+    "combine",
+    "no-v-prefix",
+    "no-sort-releases",
+  ],
   alias: {
     h: "help",
   },
@@ -40,15 +48,17 @@ try {
     );
 
     changelog.format = argv.format as "compact" | "markdownlint";
-    changelog.bulletStyle = argv['bullet-style'] as "-" | "*" | "+";
+    changelog.bulletStyle = argv["bullet-style"] as "-" | "*" | "+";
 
     save(file, changelog, true);
     Deno.exit(0);
   }
 
-  const changelog = parser(Deno.readTextFileSync(file));
+  const changelog = parser(Deno.readTextFileSync(file), {
+    autoSortReleases: !argv["no-sort-releases"],
+  });
   changelog.format = argv.format as "compact" | "markdownlint";
-  changelog.bulletStyle = argv['bullet-style'] as "-" | "*" | "+";
+  changelog.bulletStyle = argv["bullet-style"] as "-" | "*" | "+";
   if (argv["no-v-prefix"]) {
     changelog.tagNameBuilder = (release) => String(release.version);
   }
@@ -64,6 +74,18 @@ try {
 
     Deno.exit(0);
   }
+
+  if (argv["latest-release-full"]) {
+      const release = changelog.releases.find((release) =>
+        release.date && release.version
+      );
+
+      if (release) {
+        console.log(release.toString());
+      }
+
+      Deno.exit(0);
+    }
 
   if (argv.release) {
     const release = changelog.releases.find((release) => {
@@ -108,7 +130,7 @@ try {
     const version = typeof argv.create === "string" ? argv.create : undefined;
 
     const release = changelog.releases.find((release) => {
-      return release.version === version
+      return release.version === version;
     });
 
     if (release) {
@@ -210,21 +232,23 @@ function showHelp() {
 Usage: keep-a-changelog [options]
 
 Options:
-  --file, -f          Changelog file (default: CHANGELOG.md)
-  --format            Output format (default: compact)
-  --bullet-style      Bullet point style (default: -)
-  --url               Repository URL
+  --file, -f                Changelog file (default: CHANGELOG.md)
+  --format                  Output format (default: compact)
+  --bullet-style            Bullet point style (default: -)
+  --url                     Repository URL
 
-  --init              Initialize a new changelog file
-  --latest-release    Print the latest release version
+  --init                    Initialize a new changelog file
+  --latest-release          Print the latest release version
+  --latest-release-full     Print the latest release
 
-  --release           Set the date of the specified release
-  --combine           Combine changes from releases with the same version
-  --create            Create a new release
+  --release                 Set the date of the specified release
+  --combine                 Combine changes from releases with the same version
+  --create                  Create a new release
 
-  --no-v-prefix       Do not add a "v" prefix to the version
-  --head              Set the HEAD link
-  --quiet             Do not print errors
-  --help, -h          Show this help message
+  --no-v-prefix             Do not add a "v" prefix to the version
+  --no-sort-releases        Do not sort releases
+  --head                    Set the HEAD link
+  --quiet                   Do not print errors
+  --help, -h                Show this help message
 `);
 }

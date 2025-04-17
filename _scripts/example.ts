@@ -1,13 +1,33 @@
-// deno run --allow-write example.ts
-import { Changelog, Release } from "./mod.ts";
+// deno run --allow-write _scripts/example.ts
+import { Changelog, Release } from "../mod.ts";
 
 const changelog = new Changelog("Changelog")
   .addRelease(
-    new Release("2.6.0", "2024-07-21")
+    new Release("2.6.2", "2025-03-23")
+      .added("New option `--latest-release-full` to print the full release #59")
+  )
+  .addRelease(
+    new Release("2.6.1", "2025-02-24")
+      .fixed("NPM publishing #55, #56.")
+  )
+  .addRelease(
+    new Release("2.6.0", "2025-02-22")
       .added(
         "New option `--no-v-prefix` to generate the tag names without prepending `v` #43",
       )
-      .fixed("Updated dependencies"),
+      .added(
+        "New option `--no-sort-releases` to disable sorting of releases #51",
+      )
+      .added(
+        "New option `--bullet-style` for customizing the bullet point character used in unordered lists #48",
+      )
+      .added("Add Azure DevOps URL support #49")
+      .added(
+        "New option `--combine` to combine changes with the same version #50",
+      )
+      .added("`--help, -h` flag #45.")
+      .fixed("Updated dependencies")
+      .fixed("Skip release creation if it already exists #47"),
   )
   .addRelease(
     new Release("2.5.3", "2023-11-19")
@@ -82,6 +102,6 @@ const changelog = new Changelog("Changelog")
 
 changelog.url = "https://github.com/oscarotero/keep-a-changelog";
 
-const file = new URL("./CHANGELOG.md", import.meta.url).pathname;
+const file = new URL("../CHANGELOG.md", import.meta.url).pathname;
 
 Deno.writeTextFileSync(file, changelog.toString());
