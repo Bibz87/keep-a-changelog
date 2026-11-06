@@ -4,6 +4,69 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [3.2.0] - 2026-09-07
+### Added
+- Support for Codeberg.
+
+## [3.1.0] - 2026-08-03
+### Added
+- New --version argument to specify the version to release with --release or the initial version with --init
+- New flag --dry-run to log the result without saving it
+- The --release command can infer the new version if none is defined.
+
+### Changed
+- Passing an invalid version or keyword (major, minor, patch, none) returns an error.
+
+### Fixed
+- Allow to create and release versions at the same time. [#71]
+
+## [3.0.6] - 2026-08-01
+### Fixed
+- Fix hashbang for NPM. [#70]
+- Removed not necessary files from the NPM package
+
+## [3.0.5] - 2026-06-03
+### Fixed
+- Generate the NPM package with 'deno pack' [#67]
+
+## [3.0.4] - 2026-05-22
+### Fixed
+- Node types (again) [#67]
+
+## [3.0.3] - 2026-05-13
+### Fixed
+- Node types [#67]
+
+## [3.0.2] - 2026-02-24
+### Fixed
+- NPX executable [#64]
+
+## [3.0.1] - 2026-02-21
+### Fixed
+- NPM imports in the Deno version.
+
+## [3.0.0] - 2026-02-21
+### Changed
+- Use Node APIs instead of Deno for better compatibility.
+- --create option requires a value.
+- The default branch is now main instead of master
+
+### Removed
+- JSR package because it's already published on NPM which is compatible with JSR.
+- Unmaintained Deno shim dependency. The build to Node is done with a custom script.
+
+## [2.8.0] - 2026-01-08
+### Added
+- `--create` option accepts 'minor', 'major' and 'patch' values
+
+## [2.7.1] - 2025-09-14
+### Fixed
+- BitBucket URLs improperly parsed [#62]
+
+## [2.7.0] - 2025-09-07
+### Added
+- Support for BitBucket URLs [#61]
+
 ## [2.6.2] - 2025-03-23
 ### Added
 - New option `--latest-release-full` to print the full release [#59]
@@ -124,7 +187,25 @@ New version merging Deno and Node code using Deno's `dnt` package.
 [#55]: https://github.com/oscarotero/keep-a-changelog/issues/55
 [#56]: https://github.com/oscarotero/keep-a-changelog/issues/56
 [#59]: https://github.com/oscarotero/keep-a-changelog/issues/59
+[#61]: https://github.com/oscarotero/keep-a-changelog/issues/61
+[#62]: https://github.com/oscarotero/keep-a-changelog/issues/62
+[#64]: https://github.com/oscarotero/keep-a-changelog/issues/64
+[#67]: https://github.com/oscarotero/keep-a-changelog/issues/67
+[#70]: https://github.com/oscarotero/keep-a-changelog/issues/70
+[#71]: https://github.com/oscarotero/keep-a-changelog/issues/71
 
+[3.2.0]: https://github.com/oscarotero/keep-a-changelog/compare/v3.1.0...v3.2.0
+[3.1.0]: https://github.com/oscarotero/keep-a-changelog/compare/v3.0.6...v3.1.0
+[3.0.6]: https://github.com/oscarotero/keep-a-changelog/compare/v3.0.5...v3.0.6
+[3.0.5]: https://github.com/oscarotero/keep-a-changelog/compare/v3.0.4...v3.0.5
+[3.0.4]: https://github.com/oscarotero/keep-a-changelog/compare/v3.0.3...v3.0.4
+[3.0.3]: https://github.com/oscarotero/keep-a-changelog/compare/v3.0.2...v3.0.3
+[3.0.2]: https://github.com/oscarotero/keep-a-changelog/compare/v3.0.1...v3.0.2
+[3.0.1]: https://github.com/oscarotero/keep-a-changelog/compare/v3.0.0...v3.0.1
+[3.0.0]: https://github.com/oscarotero/keep-a-changelog/compare/v2.8.0...v3.0.0
+[2.8.0]: https://github.com/oscarotero/keep-a-changelog/compare/v2.7.1...v2.8.0
+[2.7.1]: https://github.com/oscarotero/keep-a-changelog/compare/v2.7.0...v2.7.1
+[2.7.0]: https://github.com/oscarotero/keep-a-changelog/compare/v2.6.2...v2.7.0
 [2.6.2]: https://github.com/oscarotero/keep-a-changelog/compare/v2.6.1...v2.6.2
 [2.6.1]: https://github.com/oscarotero/keep-a-changelog/compare/v2.6.0...v2.6.1
 [2.6.0]: https://github.com/oscarotero/keep-a-changelog/compare/v2.5.3...v2.6.0

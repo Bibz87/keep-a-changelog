@@ -1,14 +1,84 @@
-// deno run --allow-write _scripts/example.ts
 import { Changelog, Release } from "../mod.ts";
 
 const changelog = new Changelog("Changelog")
   .addRelease(
+    new Release("3.2.0", "2026-09-07")
+    .added("Support for Codeberg."),
+  )
+  .addRelease(
+    new Release("3.1.0", "2026-08-03")
+      .fixed("Allow to create and release versions at the same time. #71")
+      .added(
+        "New --version argument to specify the version to release with --release or the initial version with --init",
+      )
+      .added(
+        "New flag --dry-run to log the result without saving it",
+      )
+      .changed(
+        "Passing an invalid version or keyword (major, minor, patch, none) returns an error.",
+      )
+      .added(
+        "The --release command can infer the new version if none is defined.",
+      ),
+  )
+  .addRelease(
+    new Release("3.0.6", "2026-08-01")
+      .fixed("Fix hashbang for NPM. #70")
+      .fixed("Removed not necessary files from the NPM package"),
+  )
+  .addRelease(
+    new Release("3.0.5", "2026-06-03")
+      .fixed("Generate the NPM package with 'deno pack' #67"),
+  )
+  .addRelease(
+    new Release("3.0.4", "2026-05-22")
+      .fixed("Node types (again) #67"),
+  )
+  .addRelease(
+    new Release("3.0.3", "2026-05-13")
+      .fixed("Node types #67"),
+  )
+  .addRelease(
+    new Release("3.0.2", "2026-02-24")
+      .fixed("NPX executable #64"),
+  )
+  .addRelease(
+    new Release("3.0.1", "2026-02-21")
+      .fixed("NPM imports in the Deno version."),
+  )
+  .addRelease(
+    new Release("3.0.0", "2026-02-21")
+      .changed("Use Node APIs instead of Deno for better compatibility.")
+      .changed("--create option requires a value.")
+      .changed("The default branch is now main instead of master")
+      .removed(
+        "JSR package because it's already published on NPM which is compatible with JSR.",
+      )
+      .removed(
+        "Unmaintained Deno shim dependency. The build to Node is done with a custom script.",
+      ),
+  )
+  .addRelease(
+    new Release("2.8.0", "2026-01-08")
+      .added("`--create` option accepts 'minor', 'major' and 'patch' values"),
+  )
+  .addRelease(
+    new Release("2.7.1", "2025-09-14")
+      .fixed("BitBucket URLs improperly parsed #62"),
+  )
+  .addRelease(
+    new Release("2.7.0", "2025-09-07")
+      .added("Support for BitBucket URLs #61"),
+  )
+  .addRelease(
     new Release("2.6.2", "2025-03-23")
-      .added("New option `--latest-release-full` to print the full release #59")
+      .added(
+        "New option `--latest-release-full` to print the full release #59",
+      ),
   )
   .addRelease(
     new Release("2.6.1", "2025-02-24")
-      .fixed("NPM publishing #55, #56.")
+      .fixed("NPM publishing #55, #56."),
   )
   .addRelease(
     new Release("2.6.0", "2025-02-22")
